@@ -1,12 +1,45 @@
 <template>
   <div class="share">
         <p>シェア</p>
-        <textarea></textarea>
-        <div class="sharebtn">
+        <textarea v-model="share"></textarea>
+        <div class="sharebtn" @click="send">
           <button>シェアする</button>
         </div>
       </div>
 </template>
+
+<script>
+import axios from "axiox";
+export default {
+  data(){
+    return{
+      share:"",
+    };
+  },
+  metohds:{
+    send(){
+      if(this.share === ""){
+        alert("シェアする内容を入力してください");
+      }else {
+        axios
+        .post("https://polar-everglades-34654.herokuapp.com/api/shares",{
+          user_id:this.$store.state.user.id,
+          share:this.share,
+        })
+        .then((response)=>{
+          console.log(response);
+          alert("シェアしました");
+          this.share="";
+          this.$router.go({
+            path:this.$router.currentRoute.path,
+            force:true,
+          });
+        });
+      }
+    },
+  },
+};
+</script>
 
 
 <style scoped>

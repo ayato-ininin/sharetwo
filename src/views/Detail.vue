@@ -1,8 +1,7 @@
 <template>
   <div class="flex">
-
     <div class="left">
-     <SideNavi></SideNavi>
+      <SideNavi />
     </div>
     <div class="right">
       <div class="title">
@@ -13,16 +12,16 @@
         <div class="comment-title">
           <p>コメント</p>
         </div>
-        <div class="message" v-for="(comment,index) in data" :key="index">
+        <div class="message" v-for="(comment, index) in data" :key="index">
           <div class="flex">
-            <p class="name">{{comment.name}}</p>
+            <p class="name">{{ comment.comment_user.name }}</p>
           </div>
           <div>
-            <p class="text">{{comment.content}}</p>
+            <p class="text">{{ comment.comment.content }}</p>
           </div>
         </div>
         <input v-model="content" type="text" />
-        <div class=btn @click="send">
+        <div @click="send">
           <button>コメント</button>
         </div>
       </div>
@@ -33,19 +32,47 @@
 <script>
 import SideNavi from "../components/SideNavi";
 import Message from "../components/Message";
-
+import axios from "axios";
 export default {
-props: ["id"],
+  props: ["id"],
   data() {
     return {
       content: "",
-      data: [{ name: "太郎", like: [], share: "初めまして" }]
+      data: "",
     };
+  },
+  methods: {
+    send() {
+      axios
+        .post("https://polar-everglades-34654.herokuapp.com/api/api/comment", {
+          share_id: this.id,
+          user_id: this.$store.state.user.id,
+          content: this.content,
+        })
+        .then((response) => {
+          console.log(response);
+          this.content = "";
+          this.$router.go({
+            path: this.$router.currentRoute.path,
+            force: true,
+          });
+        });
+    },
+    comment() {
+      axios
+        .get("https://polar-everglades-34654.herokuapp.com/api/api/shares/" + this.id)
+        .then((response) => {
+          this.data = response.data.comment;
+        });
+    },
+  },
+  created() {
+    this.comment();
   },
   components: {
     SideNavi,
-    Message
-  }
+    Message,
+  },
 };
 </script>
 
