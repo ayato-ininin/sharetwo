@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from "axiox";
+import axios from "axios";
 export default {
   data(){
     return{
