@@ -13,26 +13,17 @@ const routes = [
   {
     path: "/",
     name: "login",
-    component: Login,f
+    component: Login,
   },
   {
     path: "/signup",
     name: "signup",
     component: SignUp,
-    
   },
   {
     path: "/home",
     name: "Home",
     component: Home,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: "/profile",
-    name: "profile",
-    component: Profile,
     meta: {
       requiresAuth: true,
     },
@@ -44,10 +35,23 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-    props:true
-  }
+    props: true,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: Profile,
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];
 
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes,
+});
 
 router.beforeEach((to, from, next) => {
   if (
