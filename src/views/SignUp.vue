@@ -32,7 +32,7 @@ export default {
   },
   methods:{
     auth(){
-      axios.post("https://polar-everglades-34654.herokuapp.com/api/register",{
+      axios.post("https://quiet-caverns-12881.herokuapp.com/api/register",{
         name:this.name,
         profile:this.profile,
         email:this.email,

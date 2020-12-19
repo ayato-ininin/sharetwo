@@ -72,7 +72,7 @@ export default {
     del(index) {
       axios
         .delete(
-          "https://polar-everglades-34654.herokuapp.com/api/api/shares/" +
+          "https://quiet-caverns-12881.herokuapp.com/api/api/shares/" +
             this.shares[index].item.id
         )
         .then((response) => {
@@ -86,12 +86,12 @@ export default {
     async getShares() {
       let data = [];
       const shares = await axios.get(
-        "hhttps://polar-everglades-34654.herokuapp.com/api/api/shares"
+        "https://quiet-caverns-12881.herokuapp.com/api/api/shares"
       );
       for (let i = 0; i < shares.data.data.length; i++) {
         await axios
           .get(
-            "https://polar-everglades-34654.herokuapp.com/api/api/shares/" +
+            "https://quiet-caverns-12881.herokuapp.com/api/api/shares/" +
               shares.data.data[i].id
           )
           .then((response) => {
